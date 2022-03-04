@@ -1,0 +1,27 @@
+[{"model": "student.Student",
+    "pk": 1,
+    "fields": {
+      "name": "John",
+      "sex": "1",
+      "email": "j@123.com",
+      "status": 2
+    }
+  },
+  {"model": "student.Student",
+    "pk": 2,
+    "fields": {
+      "name": "mia",
+      "sex": "2",
+      "email": "m@123.com",
+      "status": 2
+    }
+  },
+  {"model": "student.Student",
+    "pk": 3,
+    "fields": {
+      "name": "David",
+      "sex": "1",
+      "email": "D@123.com",
+      "status": 2
+    }
+  }]

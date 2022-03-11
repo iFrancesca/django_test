@@ -3,6 +3,8 @@ from .models import Category, Tag, Post
 from django.utils.html import format_html
 from django.urls import reverse
 from .adminforms import PostAdminForm
+from typeidea.custom_site import custom_site
+from typeidea.base_admin import BaseOwnerAdmin
 # Register your models here.
 
 class PostInline(admin.TabularInline):
@@ -11,7 +13,7 @@ class PostInline(admin.TabularInline):
     model = Post
     
 @admin.register(Category)
-class CategoryAdmin(admin.ModelAdmin):
+class CategoryAdmin(BaseOwnerAdmin):
     inlines = [PostInline, ]
     list_display = ('name', 'status', 'is_nav', 'created_time', 'post_count')
     fields = ('name', 'status', 'is_nav')
@@ -27,7 +29,7 @@ class CategoryAdmin(admin.ModelAdmin):
 
 
 @admin.register(Tag)
-class TagAdmin(admin.ModelAdmin):
+class TagAdmin(BaseOwnerAdmin):
     list_display = ('name', 'status', 'created_time')
     fields = ('name', 'status')
 
@@ -52,13 +54,12 @@ class CategoryOwnerFilter(admin.SimpleListFilter):
         return queryset
 
 
-@admin.register(Post)
-class PostAdmin(admin.ModelAdmin):
+@admin.register(Post, site=custom_site)
+class PostAdmin(BaseOwnerAdmin):
     form = PostAdminForm
     list_display = [
         'title', 'category', 'status',
         'created_time', 'operator', 'owner',
-
     ]
     list_display_links = []
 
@@ -105,17 +106,9 @@ class PostAdmin(admin.ModelAdmin):
     def operator(self, obj):
         return format_html(
             '<a href="{}">编辑</a>',
-            reverse('admin:blog_post_change', args=(obj.id,))
+            reverse('cus_admin:blog_post_change', args=(obj.id,))
         )
     operator.short_descriptiono = '操作'
-
-    def save_model(self, request, obj, form, change):
-        obj.owner = request.user
-        return super(PostAdmin, self).save_model(request, obj, form, change)
-
-    def get_queryset(self, request):
-        qs = super(PostAdmin, self).get_queryset(request)
-        return qs.filter(owner=request.user)
 
     class Media:
         '''css = {

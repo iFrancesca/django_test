@@ -2,9 +2,11 @@
 
 {% block title %}
     {% if tag %}
-        <p>标签页：{{ tag.name }}</p>
+        <p> 标签页：{{ tag.name }} </p>
     {% elif category %}
-        <p>分类页：{{ category.name }}</p>
+        <p> 分类页：{{ category.name }} </p>
+    {% else %}
+        <p>首页</p>
     {% endif %}
 {% endblock %}
 
@@ -20,5 +22,15 @@
             <p>{{ post.desc }}</p>
         </li>
         {% endfor %}
+        {% if page_obj %}
+
+        {% if page_obj.has_previous %}
+            <a href="?page={{ page_obj.previous_page_number }}">上一页</a>
+            {% endif %}
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">下一页</a>
+            {% endif %}
+        {% endif %}
     </ul>
 {% endblock %}

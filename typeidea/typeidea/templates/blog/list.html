@@ -2,11 +2,11 @@
 
 {% block title %}
     {% if tag %}
-        <p> 标签页：{{ tag.name }} </p>
+        标签页：{{ tag.name }}
     {% elif category %}
-        <p> 分类页：{{ category.name }} </p>
+        分类页：{{ category.name }}
     {% else %}
-        <p>首页</p>
+        首页
     {% endif %}
 {% endblock %}
 

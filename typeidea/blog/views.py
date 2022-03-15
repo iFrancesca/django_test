@@ -36,17 +36,13 @@ class PostDetailView(CommonViewMixin, DetailView):
     context_object_name = 'post'
     pk_url_kwarg = 'post_id'
 
-'''class PostDetailView(DetailView):
-    model = Post
-    template_name = "blog/detail.html"  '''
-
 class IndexView(CommonViewMixin, ListView):
     queryset = Post.latest_posts().\
         select_related('owner').\
         select_related('category')
 
-    paginate_by = 5  # 每页的数量设为5
-    context_object_name = 'post_list'  # 如果不设置此项，在模板中需要使用Object_list变量
+    paginate_by = 1  # 每页的数量设为5
+    context_object_name = 'post_list'  # 这个ListView返回结果在context中的名称为"post_list"  # 如果不设置此项，在模板中需要使用Object_list变量
     template_name = 'blog/list.html'
 
 

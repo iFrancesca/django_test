@@ -1,2 +1,1 @@
-'hello' 
-'world!' 
+> 参考书籍：《django企业开发实战》
